@@ -3,11 +3,14 @@ require 'mkmf'
 require 'rubygems'
 require 'libyajl2'
 
-RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+$YAJL_INC="/usr/local/include/yajl"
 
 # pick up the vendored libyajl2 out of the libyajl2 gem
-$CFLAGS = "-I#{Libyajl2.include_path} #{$CFLAGS}"
-$LDFLAGS = "-L#{Libyajl2.opt_path} #{$LDFLAGS}"
+$CFLAGS = " -I#{$YAJL_INC} #{$CFLAGS}"
+$LDFLAGS = " -L/usr/local/lib/ #{$LDFLAGS}"
+
+RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+
 
 # remove "-Wl,--no-undefined" flag if existent to allow for loading with dlopen
 $LDFLAGS.slice!("-Wl,--no-undefined")
